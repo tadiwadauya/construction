@@ -147,6 +147,32 @@ class VehicleController extends Controller
         return redirect()->back()->with('success', 'Vehicle created successfully');
     }
 
+    // Assign vehicle
+    public function assignVehicle(Request $request, $id)
+    {
+        $vehicle = Vehicle::find($id);
+
+        $vehicle->update([
+            'driver_id' => $request->driver_id,
+            'assigned' => true
+        ]);
+
+        return redirect()->route('vehicles.index')->with('success', 'Vehicle assigned successfully');
+    }
+
+    // De-Assign vehicle
+    public function deAssignVehicle($id)
+    {
+        $vehicle = Vehicle::find($id);
+
+        $vehicle->update([
+            'driver_id' => null,
+            'assigned' => false
+        ]);
+
+        return redirect()->route('vehicles.index')->with('success', 'Vehicle assigned successfully');
+    }
+
     /**
      * Remove the specified resource from storage.
      * @param int $id
